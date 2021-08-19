@@ -1,3 +1,11 @@
+/**
+ * User Controller module
+ * @file 用户控制器模块
+ * @module controller/user 
+ */
+
+const User = require('../model/user.model')
+
 exports.login = async (req, res, next) => {
   try {
     // TODO 用户登录
@@ -10,7 +18,11 @@ exports.login = async (req, res, next) => {
 exports.register = async (req, res, next) => {
   try {
     // TODO 用户注册
-    res.send('post /users/register')
+    const user = new User(req.body.user)
+    await user.save()
+    res.status(201).json({
+      user
+    })
   } catch (error) {
     next(error)
   }

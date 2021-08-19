@@ -3,8 +3,12 @@ const consola = require('consola')
 const morgan = require('morgan')
 const cors = require('cors')
 
-const router = require('./router')
+const mongodb = require('./config/mongodb')
+const config = require('./config/config.default')
+const enviroment = require('./enviroment')
 const errorHandler = require('./middleware/error-handler')
+
+mongodb.connect()
 
 const app = express()
 
@@ -16,13 +20,14 @@ app.use(express.json())
 // cross
 app.use(cors())
 
-const PORT = process.env.PORT || 3000
+const port = config.app.port
 
+const router = require('./router')
 app.use('/api/v1', router)
 
 // error handler
 app.use(errorHandler())
 
-app.listen(PORT, () => {
-  consola.success(`Server is running at http://localhost:${PORT}`)
+app.listen(port, () => {
+  consola.success(`Server is running at ${port} port, env: ${enviroment.enviroment}`)
 })
