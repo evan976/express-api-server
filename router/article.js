@@ -1,3 +1,9 @@
+/**
+ * Article router module
+ * @file 文章路由模块
+ * @module router/article
+ */
+
 const express = require('express')
 const articleCtrl = require('../controller/article.controller')
 

@@ -1,3 +1,9 @@
+/**
+ * Profile router module
+ * @file 个人信息路由模块
+ * @module router/profile
+ */
+
 const express = require('express')
 const profileCtrl = require('../controller/profile.controller')
 

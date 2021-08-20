@@ -1,3 +1,9 @@
+/**
+ * User router module
+ * @file 用户路由模块
+ * @module router/user
+ */
+
 const express = require('express')
 const User = require('../model/user.model')
 const userCtrl = require('../controller/user.controller')
@@ -25,13 +31,15 @@ router.post('/users/register', [
     .notEmpty().withMessage('邮箱不能为空')
     .isEmail().withMessage('邮箱格式错误')
     .bail()
-    .custom(async email => {
+    .custom(async email => {    // 自定义验证器
       const user = await User.findOne({ email })
       if (user) {
         return Promise.reject('邮箱已存在')
       }
     }),
+
 ], (req, res, next) => {
+
   const errors = validationResult(req)
 
   if (!errors.isEmpty()) {

@@ -1,3 +1,4 @@
+const http = require('http')
 const express = require('express')
 const consola = require('consola')
 const morgan = require('morgan')
@@ -8,6 +9,7 @@ const config = require('./config/config.default')
 const enviroment = require('./enviroment')
 const errorHandler = require('./middleware/error-handler')
 
+// db connect
 mongodb.connect()
 
 const app = express()
@@ -22,12 +24,13 @@ app.use(cors())
 
 const port = config.app.port
 
+// router
 const router = require('./router')
 app.use('/api/v1', router)
 
 // error handler
 app.use(errorHandler())
 
-app.listen(port, () => {
+http.createServer(app).listen(port, () => {
   consola.success(`Server is running at ${port} port, env: ${enviroment.enviroment}`)
 })

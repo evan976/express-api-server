@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon app.js",
-    "start": "NODE_ENV=production node app.js"
+    "start": "NODE_ENV=production node app.js",
+    "commit": "git cz"
   },
   "keywords": [
     "vue.js",
@@ -27,5 +28,13 @@
     "mongoose-auto-increment": "^5.0.1",
     "morgan": "^1.10.0",
     "package": "^1.0.1"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

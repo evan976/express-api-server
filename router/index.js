@@ -1,3 +1,9 @@
+/**
+ * API module
+ * @file API 分发器
+ * @module router/index
+ */
+
 const express = require('express')
 const config = require('../config/config.default')
 
