@@ -2,7 +2,7 @@
  * Error handler
  * @file 错误处理中间件
  * @module middleware/error-handler
- * 
+ *
  */
 
 const util = require('util')
