@@ -1,6 +1,6 @@
 /**
  * Profile Controller module
- * @file 用户信息控制器
+ * @file 用户资料控制器
  * @module controller/profile
  */
 

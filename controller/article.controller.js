@@ -1,6 +1,6 @@
 /**
  * Article controller module
- * @file 文章控制器模块
+ * @file 文章控制器
  * @module controller/article
  */
 

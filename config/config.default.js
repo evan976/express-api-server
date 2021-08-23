@@ -8,7 +8,8 @@ const package = require('package')(module)
 
 module.exports = {
   app: {
-    port: process.env.PORT || 3000
+    port: process.env.PORT || 3000,
+    jwtSecret: '7f5ad335-ccb6-43a4-a386-b65d0d84d87e'
   },
 
   mongodb: {

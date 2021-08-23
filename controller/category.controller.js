@@ -15,7 +15,7 @@ exports.getCategoryLists = async (req, res, next) => {
 
 exports.getCategory = async (req, res, next) => {
   try {
-    // TODO 获取单个分类列表
+    // TODO 获取单个分类
     res.send('getCategory')
   } catch (error) {
     next(error)
