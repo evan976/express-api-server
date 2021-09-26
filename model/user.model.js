@@ -1,36 +1,56 @@
 /**
- * User model module
- * @file 用户数据模型
- * @module model/user
+ * @module 用户模型
  */
 
-const { mongoose } = require('../config/mongodb')
+const { mongoose } = require('../core/mongodb')
 const autoIncrement = require('mongoose-auto-increment')
-const md5 = require('../utils/md5')
 
 const userSchema = new mongoose.Schema({
 
-  username: { type: String, required: true },
+  username: {
+    type: String,
+    required: true
+  },
 
-  email: { type: String, required: true },
+  email: {
+    type: String
+  },
 
   password: {
     type: String,
-    required: true,
-    set: value => md5(value),
-    select: false
+    required: true
   },
 
-  slogan: { type: String, default: '' },
+  slogan: {
+    type: String,
+    default: ''
+  },
 
-  gravatar: { type: String, default: '' }
+  gravatar: {
+    type: String,
+    default: ''
+  },
+
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
+
+  updated_at: {
+    type: Date
+  }
 })
 
 userSchema.plugin(autoIncrement.plugin, {
   model: 'User',
-  field: 'user_id',
+  field: 'id',
   startAt: 1,
   incrementBy: 1
+})
+
+userSchema.pre('findOneAndUpdate', function (next) {
+  this.findOneAndUpdate({}, { updated_at: Date.now() })
+  next()
 })
 
 module.exports = mongoose.model('User', userSchema)

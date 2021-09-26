@@ -1,19 +1,19 @@
 /**
- * Config module
- * @file 全局配置
- * @module config.default
+ * @module 全局配置
  */
 
 const package = require('package')(module)
 
 module.exports = {
   app: {
-    port: process.env.PORT || 3000,
-    jwtSecret: '7f5ad335-ccb6-43a4-a386-b65d0d84d87e'
+    port: process.env.PORT || 8000,
+    host: process.env.HOST || 'localhost'
   },
 
+  jwtSecret: 'nodeserver',
+
   mongodb: {
-    uri: 'mongodb://127.0.0.1:27017/blog-api-express'
+    uri: 'mongodb://127.0.0.1:27017/node-app-server'
   },
 
   info: {

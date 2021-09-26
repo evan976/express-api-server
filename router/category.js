@@ -1,27 +1,16 @@
-/**
- * Category Router module
- * @file 分类路由模块
- * @module router/category
- */
-
 const express = require('express')
-const categoryCtrl = require('../controller/category.controller')
-
 const router = express.Router()
 
-// get all categories
-router.get('/', categoryCtrl.getCategoryLists)
+const auth = require('../utils/auth')
 
-// get a category
-router.get('/:category_id', categoryCtrl.getCategory)
+router.get('/', require('../controller/category.controller').findAll)
 
-// create category
-router.post('/', categoryCtrl.createCategory)
+router.get('/details', require('../controller/category.controller').findOne)
 
-// update category
-router.put('/:category_id', categoryCtrl.updateCategory)
+router.post('/', auth, require('../controller/category.controller').create)
 
-// delete category
-router.delete('/:category_id', categoryCtrl.removeCategory)
+router.put('/', auth, require('../controller/category.controller').update)
+
+router.delete('/', auth, require('../controller/category.controller').remove)
 
 module.exports = router

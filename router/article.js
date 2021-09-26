@@ -1,42 +1,16 @@
-/**
- * Article router module
- * @file 文章路由模块
- * @module router/article
- */
-
 const express = require('express')
-const articleCtrl = require('../controller/article.controller')
-
 const router = express.Router()
 
-// list articles
-router.get('/', articleCtrl.getArticleLists)
+const auth = require('../utils/auth')
 
-// feed articles
-router.get('/feed', articleCtrl.getArticleListsBySpecifiedUser)
+router.get('/', require('../controller/article.controller').find)
 
-// // get article
-router.get('/:slug', articleCtrl.getArticle)
+router.get('/detail', require('../controller/article.controller').findOne)
 
-// create article
-router.post('/', articleCtrl.createArticle)
+router.post('/', auth, require('../controller/article.controller').create)
 
-// update article
-router.put('/:slug', articleCtrl.updateArticle)
+router.put('/', auth, require('../controller/article.controller').update)
 
-// delete article
-router.delete('/:slug', articleCtrl.removeArticle)
-
-// add comments to an article
-router.post('/:slug/comments', articleCtrl.addComments)
-
-// get comments from an article
-router.get('/:slug/comments', articleCtrl.getComments)
-
-// delete comment
-router.delete('/:slug/comments/:id', articleCtrl.removeComment)
-
-// favorite article
-router.post('/:slug/favorite', articleCtrl.favoriteArticle)
+router.delete('/', auth, require('../controller/article.controller').remove)
 
 module.exports = router

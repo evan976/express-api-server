@@ -1,25 +1,16 @@
 /**
- * User router module
- * @file 用户路由模块
- * @module router/user
+ * @module 用户路由模块
  */
 
 const express = require('express')
-const userCtrl = require('../controller/user.controller')
-const userValidator = require('../validator/user.validator')
+const auth = require('../utils/auth')
 
 const router = express.Router()
 
-// login
-router.post('/users/login', userValidator.login, userCtrl.login)
+router.post('/login', require('../controller/user.controller').login)
 
-// register
-router.post('/users/register', userValidator.register, userCtrl.register)
+router.get('/user', auth, require('../controller/user.controller').find)
 
-// get current user
-router.get('/user', userCtrl.getCurrentUser)
-
-// update user
-router.put('/user', userCtrl.updateCurrentUser)
+router.put('/user', auth, require('../controller/user.controller').update)
 
 module.exports = router

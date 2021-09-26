@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+const http = require('http')
+
+const app = require('../app')
+const config = require('../config/config.default')
+const enviroment = require('../enviroment')
+
+const { port, host } = config.app
+
+http.createServer(app).listen(port, () => {
+  console.log(`Server is running at http://${host}:${port}/api/private/v1, env: ${enviroment.enviroment}`)
+})

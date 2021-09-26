@@ -1,7 +1,5 @@
 /**
- * Enviroment module
- * @file 环境配置
- * @module enviroment
+ * @module 环境配置
  */
 
 const enviroment = process.env.NODE_ENV

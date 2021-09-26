@@ -1,32 +1,22 @@
 /**
- * API module
- * @file API 分发器
- * @module router/index
+ * @module 路由统一出口
  */
 
 const express = require('express')
-const config = require('../config/config.default')
+const { info } = require('../config/config.default')
 
 const router = express.Router()
 
-// info
 router.get('/', (req, res) => {
-  res.jsonp(config.info)
+  res.jsonp(info)
 })
 
-// user
 router.use(require('./user'))
 
-// profile
-router.use('/profiles', require('./profile'))
+router.use('/article', require('./article'))
 
-// article
-router.use('/articles', require('./article'))
+router.use('/category', require('./category'))
 
-// tag
-router.use('/tags', require('./tag'))
-
-// category
-router.use('/categories', require('./category'))
+router.use('/tag', require('./tag'))
 
 module.exports = router

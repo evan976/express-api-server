@@ -1,29 +1,24 @@
 {
   "name": "blog-api-express",
   "version": "1.0.0",
-  "description": "restful api server application for my blog",
+  "description": "RESTful API server application for my blog",
   "main": "app.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon app.js",
-    "start": "NODE_ENV=production node app.js",
+    "dev": "NODE_ENV=development nodemon ./bin/www",
+    "start": "NODE_ENV=production node ./bin/www",
     "commit": "git cz"
   },
-  "keywords": [
-    "vue.js",
-    "node.js",
-    "express",
-    "nuxt.js"
-  ],
+  "keywords": ["NodeJS", "Express","MongoDB"],
   "author": {
-    "name": "evan",
+    "name": "Evan",
     "email": "wjh50940@163.com"
   },
   "license": "MIT",
   "dependencies": {
-    "consola": "^2.15.3",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^4.17.1",
-    "express-validator": "^6.12.1",
+    "gravatar": "^1.8.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.7",
     "mongoose-auto-increment": "^5.0.1",

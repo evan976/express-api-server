@@ -1,5 +1,5 @@
 /**
- * 数据助手
+ * @module 工具函数
  */
 
 // 判断是否为字符串
@@ -14,7 +14,9 @@ const isArray = array => Array.isArray(array)
 // 数组去重
 const arrayUniq = (a, b = []) => [new Set(...a, ...b)]
 
-exports.isArray = isArray
-exports.isNumber = isNumber
-exports.isString = isString
-exports.arrayUniq = arrayUniq
+module.exports = {
+  isString,
+  isNumber,
+  isArray,
+  arrayUniq
+}

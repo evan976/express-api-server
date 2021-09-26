@@ -1,8 +1,26 @@
+/**
+ * @module jsonwebtoken
+ */
+
 const jwt = require('jsonwebtoken')
-const { promisify } = require('util')
+const { jwtSecret } = require('../config/config.default')
 
-exports.sign = promisify(jwt.sign)
+const sign = data => {
+  return jwt.sign({
+    data
+  }, jwtSecret, { expiresIn: 60 * 60 * 24 * 7 })
+}
 
-exports.verify = promisify(jwt.verify)
+const verify = token => {
+  try {
+    const data = jwt.verify(token, jwtSecret)
+    return { userId: data.data, token: true }
+  } catch (err) {
+    return { userId: null, token: false }
+  }
+}
 
-exports.decode = promisify(jwt.decode)
+module.exports = {
+  sign,
+  verify
+}

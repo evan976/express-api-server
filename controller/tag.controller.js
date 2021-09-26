@@ -1,14 +1,13 @@
-/**
- * Tag Controller module
- * @file 标签控制器
- * @module controller/tag
- */
+const Tag = require('../model/tag.model')
+const HandleResponse = require('../core/response-handler')
 
-exports.getTagLists = async (req, res, next) => {
-  try {
-    // TODO 获取全部标签
-    res.send('getTagLists')
-  } catch (error) {
-    next(error)
-  }
+class TagController {
+
+  async find (req, res) {}
+  async findOne (req, res) {}
+  async create (req, res) {}
+  async update (req, res) {}
+  async remove (req, res) {}
 }
+
+module.exports = new TagController()
