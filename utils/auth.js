@@ -16,7 +16,7 @@ const auth = async (req, res, next) => {
 
   try {
     const { data } = jwt.verify(token, jwtSecret)
-    res.user_id = data
+    req.user_id = data
     next()
   } catch (error) {
     return new HandleResponse('token错误或过期，请重新登录！').fail(res)

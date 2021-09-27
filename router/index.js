@@ -19,4 +19,6 @@ router.use('/categories', require('./category'))
 
 router.use('/tags', require('./tag'))
 
+router.use('/options', require('./option'))
+
 module.exports = router
