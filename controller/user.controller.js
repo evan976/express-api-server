@@ -2,40 +2,43 @@
  * @module 用户控制器
  */
 
+const jwt = require('jsonwebtoken')
 const User = require('../model/user.model')
 const HandleResponse = require('../core/response-handler')
-const { sign } = require('../utils/jwt')
 const md5Decode = require('../utils/crypto')
+const { jwtSecret } = require('../config/config.default')
 class UserController {
 
-  async login ({ body: { username, password }}, res) {
-    try {
-      const [user] = await User.find({ username }, '_id username password')
-      if (user) {
-        if (Object.is(user.password, md5Decode(password))) {
-          const token = sign(user._id)
+  login ({ body: { username, password }}, res) {
+
+    User.find({ username }, '_id username password')
+      .then(([user]) => {
+        if (!user) {
+          return new HandleResponse('用户不存在').fail(res)
+        }
+        if (user.password === md5Decode(password)) {
+          const token = jwt.sign({
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7),
+            data: user._id
+          }, jwtSecret)
           new HandleResponse({ token }, '登录成功').success(res)
         } else {
           return new HandleResponse('密码错误').fail(res)
         }
-      } else {
-        password = md5Decode(password)
-        new User({ username, password }).save()
-        return new HandleResponse('注册用户成功').success(res)
-      }
-    } catch (error) {
-      console.log(error)
-      new HandleResponse('失败').fail(res)
-    }
+      })
+      .catch(err => {
+        new HandleResponse('登录失败').fail(res)
+      })
   }
 
-  async find (req, res) {
-    try {
-      const [user] = await User.find({}, '-_id id username email slogan gravatar created_at updated_at')
-      user ? new HandleResponse({ user }, '获取个人信息成功').success(res) : new HandleResponse('获取个人信息失败').fail(res)
-    } catch (error) {
-      new HandleResponse('失败').fail(res)
-    }
+  find (req, res) {
+    User.find({}, '-_id id username email slogan gravatar created_at updated_at')
+      .then(([user]) => {
+        new HandleResponse({ user }, '获取个人信息成功').success(res)
+      })
+      .catch(err => {
+        new HandleResponse('获取个人信息失败').fail(res)
+      })
   }
 
   async update ({ body: user }, res) {
@@ -77,7 +80,7 @@ class UserController {
         return new HandleResponse('用户资料更新失败').fail(res)
       }
 
-    } catch (error) {
+    } catch (err) {
       new HandleResponse('用户资料更新失败').fail(res)
     }
   }

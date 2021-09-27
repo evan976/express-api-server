@@ -13,10 +13,10 @@ router.get('/', (req, res) => {
 
 router.use(require('./user'))
 
-router.use('/article', require('./article'))
+router.use('/articles', require('./article'))
 
-router.use('/category', require('./category'))
+router.use('/categories', require('./category'))
 
-router.use('/tag', require('./tag'))
+router.use('/tags', require('./tag'))
 
 module.exports = router

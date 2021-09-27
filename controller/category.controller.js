@@ -13,7 +13,7 @@ class CategoryController {
       offset = 1
     }
 
-    Category.find().skip((offset - 1) * limit).limit(limit).sort({ _id: SORT_TYPE.desc })
+    Category.find({}, '-_id id name slug description').skip((offset - 1) * limit).limit(limit).sort({ _id: SORT_TYPE.desc })
       .then(categoryList => {
         categoryList.length
           ? new HandleResponse({ categoryList }, '分类列表获取成功').success(res)
@@ -24,8 +24,8 @@ class CategoryController {
       })
   }
 
-  findOne ({ query: { id } }, res) {
-    Category.findOne({ id })
+  findOne ({ params: { category_id } }, res) {
+    Category.findById(category_id)
       .then(result => {
         result
           ? new HandleResponse({ result }, '分类获取成功').success(res)
@@ -62,7 +62,7 @@ class CategoryController {
 
   }
 
-  update ({ query: { id }, body: category, body: { name } }, res) {
+  update ({ params: { category_id }, body: category, body: { name } }, res) {
 
     if (!name) return new HandleResponse('分类名称不能为空').fail(res)
 
@@ -77,7 +77,7 @@ class CategoryController {
       })
 
     const updateCategory = () => {
-      Category.findOneAndUpdate({ id }, category, { new: true })
+      Category.findByIdAndUpdate(category_id, category, { new: true })
         .then(result => {
           result
           ? new HandleResponse({ result }, '分类修改成功').success(res)
@@ -89,8 +89,8 @@ class CategoryController {
     }
   }
 
-  remove ({ query: { id } }, res) {
-    Category.findOneAndRemove({ id })
+  remove ({ params: { category_id } }, res) {
+    Category.findByIdAndRemove(category_id)
     .then(() => {
       new HandleResponse('分类删除成功').success(res)
     })

@@ -1,14 +1,16 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/', require('../controller/tag.controller').find)
+const auth = require('../utils/auth')
 
-router.get('/detail', require('../controller/tag.controller').findOne)
+router.get('/', require('../controller/tag.controller').findAll)
 
-router.post('/', require('../controller/tag.controller').create)
+router.get('/:tag_id', require('../controller/tag.controller').findOne)
 
-router.put('/', require('../controller/tag.controller').update)
+router.post('/', auth, require('../controller/tag.controller').create)
 
-router.delete('/', require('../controller/tag.controller').remove)
+router.put('/:tag_id', auth, require('../controller/tag.controller').update)
+
+router.delete('/:tag_id', auth, require('../controller/tag.controller').remove)
 
 module.exports = router

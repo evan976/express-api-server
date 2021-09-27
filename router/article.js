@@ -5,7 +5,7 @@ const auth = require('../utils/auth')
 
 router.get('/', require('../controller/article.controller').find)
 
-router.get('/detail', require('../controller/article.controller').findOne)
+router.get('/detail/:id', require('../controller/article.controller').findOne)
 
 router.post('/', auth, require('../controller/article.controller').create)
 

@@ -9,8 +9,8 @@ const router = express.Router()
 
 router.post('/login', require('../controller/user.controller').login)
 
-router.get('/user', auth, require('../controller/user.controller').find)
+router.get('/users', auth, require('../controller/user.controller').find)
 
-router.put('/user', auth, require('../controller/user.controller').update)
+router.put('/users', auth, require('../controller/user.controller').update)
 
 module.exports = router
