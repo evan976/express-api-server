@@ -1,5 +1,5 @@
 /**
- * @module 用户路由模块
+ * @module 用户路由
  */
 
 const express = require('express')

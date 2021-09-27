@@ -1,3 +1,7 @@
+/**
+ * @module 标签模型
+ */
+
 const { mongoose } = require('../core/mongodb')
 const autoIncrement = require('mongoose-auto-increment')
 
@@ -43,4 +47,4 @@ tagSchema.pre('findOneAndUpdate', function (next) {
   next()
 })
 
-module.exports = mongoose.model('tag', tagSchema)
+module.exports = mongoose.model('Tag', tagSchema)

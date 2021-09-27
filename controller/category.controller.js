@@ -1,26 +1,30 @@
+/**
+ * @module 分类控制器
+ */
+
 const Category = require('../model/category.model')
 const HandleResponse = require('../core/response-handler')
 const { SORT_TYPE } = require('../core/constant')
 
 class CategoryController {
 
-  findAll (req, res) {
-
-    let limit = parseInt(req.query.limit) || 10
-    let offset = parseInt(req.query.offset) || 1
+  findAll ({ query: { limit = 10, offset = 1 } }, res) {
 
     if (offset < 1) {
       offset = 1
     }
 
-    Category.find({}, '-_id id name slug description').skip((offset - 1) * limit).limit(limit).sort({ _id: SORT_TYPE.desc })
+    Category.find({}, '-_id id name slug description')
+      .skip((parseInt(offset) - 1) * parseInt(limit))
+      .limit(parseInt(limit))
+      .sort({ _id: SORT_TYPE.desc })
       .then(categoryList => {
         categoryList.length
-          ? new HandleResponse({ categoryList }, '分类列表获取成功').success(res)
-          : new HandleResponse('分类列表为空').fail(res)
+          ? res.json({ code: 1, message: '分类列表获取成功', data: { categoryList, pagination: { limit, offset } } })
+          : new HandleResponse('空空如也～').fail(res)
       })
       .catch(err => {
-        new HandleResponse('分类列表为空').fail(res)
+        new HandleResponse('分类列表获取失败').fail(res)
       })
   }
 
@@ -29,7 +33,7 @@ class CategoryController {
       .then(result => {
         result
           ? new HandleResponse({ result }, '分类获取成功').success(res)
-          : new HandleResponse('分类不存在').fail(res)
+          : new HandleResponse('没有这个分类啊～').fail(res)
       })
       .catch(err => {
         new HandleResponse('分类获取失败').fail(res)
@@ -80,11 +84,11 @@ class CategoryController {
       Category.findByIdAndUpdate(category_id, category, { new: true })
         .then(result => {
           result
-          ? new HandleResponse({ result }, '分类修改成功').success(res)
-          : new HandleResponse('分类不存在').fail(res)
+          ? new HandleResponse({ result }, '分类更新成功').success(res)
+          : new HandleResponse('没有这个分类啊～').fail(res)
         })
         .catch(err => {
-          new HandleResponse('分类修改失败').fail(res)
+          new HandleResponse('分类更新失败').fail(res)
         })
     }
   }

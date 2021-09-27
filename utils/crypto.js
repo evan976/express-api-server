@@ -1,3 +1,7 @@
+/**
+ * @module 密码编码
+ */
+
 const crypto = require('crypto')
 
 const md5Decode = password => {

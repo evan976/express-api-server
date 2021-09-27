@@ -1,3 +1,7 @@
+/**
+ * @module 标签控制器
+ */
+
 const Tag = require('../model/tag.model')
 const HandleResponse = require('../core/response-handler')
 

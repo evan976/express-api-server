@@ -1,3 +1,7 @@
+/**
+ * @module 分类模型
+ */
+
 const { mongoose } = require('../core/mongodb')
 const autoIncrement = require('mongoose-auto-increment')
 

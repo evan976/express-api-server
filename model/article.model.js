@@ -1,9 +1,12 @@
+/**
+ * @module 文章模型
+ */
+
 const { mongoose } = require('../core/mongodb')
 const autoIncrement = require('mongoose-auto-increment')
 const { PUBLISH_STATE, ORIGIN_TYPE } = require('../core/constant')
 
 const articleSchema = new mongoose.Schema({
-
 
   // 标题
   title: {

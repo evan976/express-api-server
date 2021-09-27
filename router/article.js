@@ -1,16 +1,20 @@
+/**
+ * @module 文章路由
+ */
+
 const express = require('express')
 const router = express.Router()
 
 const auth = require('../utils/auth')
 
-router.get('/', require('../controller/article.controller').find)
+router.get('/', require('../controller/article.controller').findAll)
 
-router.get('/detail/:id', require('../controller/article.controller').findOne)
+router.get('/:article_id', require('../controller/article.controller').findOne)
 
 router.post('/', auth, require('../controller/article.controller').create)
 
-router.put('/', auth, require('../controller/article.controller').update)
+router.put('/:article_id', auth, require('../controller/article.controller').update)
 
-router.delete('/', auth, require('../controller/article.controller').remove)
+router.delete('/:article_id', auth, require('../controller/article.controller').remove)
 
 module.exports = router
