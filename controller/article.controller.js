@@ -34,9 +34,14 @@ class ArticleController {
       .populate('category', 'name')
       .populate('tags', 'name')
       .then(result => {
-        result
-          ? new HandleResponse({ result }, '获取文章详情成功').success(res)
-          : new HandleResponse('文章资源不存在').fail(res)
+        if (result) {
+          // 每请求一次文章详情，浏览数量 +1
+          result.meta.views++
+          result.save()
+          new HandleResponse({ result }, '获取文章详情成功').success(res)
+        } else {
+          new HandleResponse('文章资源不存在').fail(res)
+        }
       })
       .catch(err => {
         new HandleResponse('获取文章详情失败').fail(res)
@@ -72,15 +77,6 @@ class ArticleController {
           new HandleResponse('文章发布失败').fail(res)
         })
     }
-
-    // try {
-    //   const [_article] = await new Article(article).save()
-    //   _article
-    //    ? new HandleResponse({ article }, '文章发布成功').success(res)
-    //    : new HandleResponse('文章发布失败').fail(res)
-    // } catch (error) {
-    //   return new HandleResponse('文章发布失败').fail(res)
-    // }
   }
 
   update ({ params: { article_id }, body: article, body: { title, content, category } }, res) {
