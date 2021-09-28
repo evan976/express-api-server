@@ -52,6 +52,7 @@ class UserController {
 
     const saveUser = () => {
 
+      // 两次密码编码
       password = md5Decode(decodePassword(password))
       rel_password = md5Decode(decodePassword(rel_password))
 
@@ -88,6 +89,7 @@ class UserController {
 
           let { password, new_password, rel_new_password } = user
 
+          // 密码编码
           password = decodePassword(password)
           new_password = decodePassword(new_password)
           rel_new_password = decodePassword(rel_new_password)
@@ -107,6 +109,7 @@ class UserController {
           }
 
           if (rel_new_password) {
+            // 更新后的密码赋值（并将 user 中新密码和确认新密码删除）=> user: { "password": "xxx" }
             user.password = md5Decode(rel_new_password)
             Reflect.deleteProperty(user, 'new_password')
             Reflect.deleteProperty(user, 'rel_new_password')
@@ -117,6 +120,7 @@ class UserController {
             .catch(err => new HandleResponse('密码修改失败').fail(res))
         }
 
+        // 设置 fields 控制返回字段（不返回密码）
         User.findByIdAndUpdate(user_id, user, { new: true, fields: { 'password': 0 } })
             .then(result => new HandleResponse({ result }, '用户资料更新成功').success(res))
             .catch(err => new HandleResponse('用户资料更新失败').fail(res))

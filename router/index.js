@@ -21,4 +21,6 @@ router.use('/tags', require('./tag'))
 
 router.use('/options', require('./option'))
 
+router.post('/upload', require('../controller/upload.controller').uploadFiles)
+
 module.exports = router

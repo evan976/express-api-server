@@ -24,11 +24,11 @@ exports.connect = () => {
   const db = mongoose.connection
 
   db.on('error', error => {
-    console.log('Database connection failed!', error)
+    console.log('❌ 数据库连接失败!', error)
   })
 
   db.once('open', () => {
-    console.log('Database connection is successful!')
+    console.log('✅ 数据库连接准备就绪～')
   })
 
   // 自增 id 初始化

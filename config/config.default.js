@@ -6,14 +6,21 @@ const package = require('package')(module)
 
 module.exports = {
   app: {
-    port: process.env.PORT || 8000,
-    host: process.env.HOST || 'localhost'
+    port: process.env.APP_PORT || 8000,
+    host: process.env.APP_HOST || 'localhost'
   },
 
-  jwtSecret: 'nodeserver',
+  jwtSecret: process.env.JWTSECRET || 'nodeserver',
 
   mongodb: {
-    uri: 'mongodb://127.0.0.1:27017/node-app-server'
+    uri: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
+  },
+
+  QINIU: {
+    accessKey: process.env.ACCESSKEY,
+    secretKey: process.env.SECRETKEY,
+    scope: 'my-website-images',
+    url: 'http://r059le9ks.hn-bkt.clouddn.com/'
   },
 
   info: {
