@@ -24,6 +24,7 @@
     "express": "^4.17.1",
     "gravatar": "^1.8.2",
     "http-assert": "^1.5.0",
+    "js-base64": "^3.7.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.7",
     "mongoose-auto-increment": "^5.0.1",
