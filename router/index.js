@@ -4,7 +4,6 @@
 
 const express = require('express')
 const { INFO } = require('../config/config.default')
-const auth = require('../utils/auth')
 
 const router = express.Router()
 
@@ -22,6 +21,6 @@ router.use('/tags', require('./tag'))
 
 router.use('/options', require('./option'))
 
-router.post('/upload', auth, require('../controller/upload.controller').uploadFiles)
+router.use('/images', require('./image'))
 
 module.exports = router
