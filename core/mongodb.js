@@ -4,7 +4,7 @@
 
 const mongoose = require('mongoose')
 const autoIncrement = require('mongoose-auto-increment')
-const config = require('../config/config.default')
+const { MONGODB } = require('../config/config.default')
 
 mongoose.set('useFindAndModify', false)
 
@@ -14,7 +14,7 @@ exports.mongoose = mongoose
 
 exports.connect = () => {
 
-  mongoose.connect(config.mongodb.uri, {
+  mongoose.connect(MONGODB.uri, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,

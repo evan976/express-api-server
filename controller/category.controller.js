@@ -23,9 +23,7 @@ class CategoryController {
           ? res.json({ code: 1, message: '分类列表获取成功', data: { categoryList, pagination: { limit, offset } } })
           : new HandleResponse('空空如也～').fail(res)
       })
-      .catch(err => {
-        new HandleResponse('分类列表获取失败').fail(res)
-      })
+      .catch(err => new HandleResponse('分类列表获取失败').fail(res))
   }
 
   findOne ({ params: { category_id } }, res) {
@@ -35,9 +33,7 @@ class CategoryController {
           ? new HandleResponse({ result }, '分类获取成功').success(res)
           : new HandleResponse('没有这个分类啊～').fail(res)
       })
-      .catch(err => {
-        new HandleResponse('分类获取失败').fail(res)
-      })
+      .catch(err => new HandleResponse('分类获取失败').fail(res))
   }
 
   create ({ body: category, body: { name } }, res) {
@@ -50,18 +46,12 @@ class CategoryController {
           ? new HandleResponse('分类已存在').fail(res)
           : saveCategory()
       })
-      .catch(err => {
-        new HandleResponse('新增分类失败').fail(res)
-      })
+      .catch(err => new HandleResponse('新增分类失败').fail(res))
 
     const saveCategory = () => {
       new Category(category).save()
-        .then(result => {
-          new HandleResponse({ result }, '新增分类成功').success(res)
-        })
-        .catch(err => {
-          new HandleResponse('新增分类失败').fail(res)
-        })
+        .then(result => new HandleResponse({ result }, '新增分类成功').success(res))
+        .catch(err => new HandleResponse('新增分类失败').fail(res))
     }
 
   }
@@ -76,9 +66,7 @@ class CategoryController {
           ? new HandleResponse('分类已存在').fail(res)
           : updateCategory()
       })
-      .catch(err => {
-        new HandleResponse('分类修改失败').fail(res)
-      })
+      .catch(err => new HandleResponse('分类修改失败').fail(res))
 
     const updateCategory = () => {
       Category.findByIdAndUpdate(category_id, category, { new: true })
@@ -87,20 +75,14 @@ class CategoryController {
           ? new HandleResponse({ result }, '分类更新成功').success(res)
           : new HandleResponse('没有这个分类啊～').fail(res)
         })
-        .catch(err => {
-          new HandleResponse('分类更新失败').fail(res)
-        })
+        .catch(err => new HandleResponse('分类更新失败').fail(res))
     }
   }
 
   remove ({ params: { category_id } }, res) {
     Category.findByIdAndRemove(category_id)
-    .then(() => {
-      new HandleResponse('分类删除成功').success(res)
-    })
-    .catch(err => {
-      new HandleResponse('分类删除失败').fail(res)
-    })
+    .then(() => new HandleResponse('分类删除成功').success(res))
+    .catch(err => new HandleResponse('分类删除失败').fail(res))
   }
 
 }

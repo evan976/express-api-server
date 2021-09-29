@@ -5,15 +5,17 @@
 const package = require('package')(module)
 
 module.exports = {
-  app: {
+  APP: {
     port: process.env.APP_PORT || 8000,
     host: process.env.APP_HOST || 'localhost'
   },
 
-  jwtSecret: process.env.JWTSECRET || 'nodeserver',
+  JWTSECRET: process.env.JWTSECRET || 'nodeserver',
 
-  mongodb: {
-    uri: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
+  MONGODB: {
+    uri: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`,
+    username: process.env.DB_USERNAME || 'root',
+    password: process.env.DB_PASSWORD || 'root'
   },
 
   QINIU: {
@@ -23,7 +25,7 @@ module.exports = {
     url: 'http://r059le9ks.hn-bkt.clouddn.com/'
   },
 
-  info: {
+  INFO: {
     name: package.name,
     description: package.description,
     version: package.version,

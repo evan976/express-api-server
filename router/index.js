@@ -3,12 +3,13 @@
  */
 
 const express = require('express')
-const { info } = require('../config/config.default')
+const { INFO } = require('../config/config.default')
+const auth = require('../utils/auth')
 
 const router = express.Router()
 
 router.get('/', (req, res) => {
-  res.jsonp(info)
+  res.jsonp(INFO)
 })
 
 router.use(require('./user'))
@@ -21,6 +22,6 @@ router.use('/tags', require('./tag'))
 
 router.use('/options', require('./option'))
 
-router.post('/upload', require('../controller/upload.controller').uploadFiles)
+router.post('/upload', auth, require('../controller/upload.controller').uploadFiles)
 
 module.exports = router

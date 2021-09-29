@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../model/user.model')
 const HandleResponse = require('../core/response-handler')
 const { md5Decode, decodePassword} = require('../utils/encrypt')
-const { jwtSecret } = require('../config/config.default')
+const { JWTSECRET } = require('../config/config.default')
 
 class UserController {
 
@@ -21,15 +21,13 @@ class UserController {
           const token = jwt.sign({
             exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7),
             data: user._id
-          }, jwtSecret)
+          }, JWTSECRET)
           new HandleResponse({ token }, '登录成功').success(res)
         } else {
           return new HandleResponse('密码错误').fail(res)
         }
       })
-      .catch(err => {
-        new HandleResponse('登录失败').fail(res)
-      })
+      .catch(err => new HandleResponse('登录失败').fail(res))
   }
 
   register ({ body: { username, email, password, rel_password }}, res) {
@@ -46,9 +44,7 @@ class UserController {
           ? new HandleResponse('用户名已存在，换个名字吧～')
           : saveUser()
       })
-      .catch(err => {
-        new HandleResponse('用户注册失败').fail(res)
-      })
+      .catch(err => new HandleResponse('用户注册失败').fail(res))
 
     const saveUser = () => {
 
@@ -61,23 +57,15 @@ class UserController {
       }
 
       new User({ username, email, password }).save()
-        .then(() => {
-          new HandleResponse('用户注册成功').success(res)
-        })
-        .catch(err => {
-          new HandleResponse('用户注册失败').fail(res)
-        })
+        .then(() => new HandleResponse('用户注册成功').success(res))
+        .catch(err => new HandleResponse('用户注册失败').fail(res))
     }
   }
 
   find ({ user_id }, res) {
     User.findById(user_id, '-_id id username email slogan gravatar created_at updated_at')
-      .then((user) => {
-        new HandleResponse({ user }, '获取个人信息成功').success(res)
-      })
-      .catch(err => {
-        new HandleResponse('获取个人信息失败').fail(res)
-      })
+      .then(user => new HandleResponse({ user }, '获取个人信息成功').success(res))
+      .catch(err => new HandleResponse('获取个人信息失败').fail(res))
   }
 
   update ({ body: user, user_id }, res) {

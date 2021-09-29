@@ -5,7 +5,7 @@
 const jwt = require('jsonwebtoken')
 // const User = require('../model/user.model')
 const HandleResponse = require('../core/response-handler')
-const { jwtSecret } = require('../config/config.default')
+const { JWTSECRET } = require('../config/config.default')
 
 const auth = async (req, res, next) => {
 
@@ -15,7 +15,7 @@ const auth = async (req, res, next) => {
   const token = req.headers.authorization.split(' ').pop()
 
   try {
-    const { data } = jwt.verify(token, jwtSecret)
+    const { data } = jwt.verify(token, JWTSECRET)
     req.user_id = data
     next()
   } catch (error) {

@@ -38,7 +38,7 @@ class UploadController {
       // 获取上传凭证 token
       let token = upToken()
 
-      // 要上传文件的本地路径 (前端需要提供 file 字段或者表单 type 为 file)
+      // 要上传文件的本地路径 (表单 type 为 file)
       let filePath = files.file.path
 
       const config = new qiniu.conf.Config({

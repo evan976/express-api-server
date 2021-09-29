@@ -9,12 +9,8 @@ class OptionController {
 
   findOptions (req, res) {
     Option.find({})
-      .then(([result]) => {
-        new HandleResponse({ result }, '获取网站信息成功').success(res)
-      })
-      .catch(err => {
-        new HandleResponse('获取网站信息失败').fail(res)
-      })
+      .then(([result]) => new HandleResponse({ result }, '获取网站信息成功').success(res))
+      .catch(err => new HandleResponse('获取网站信息失败').fail(res))
   }
 
   updateOptions ({ body: option }, res) {
@@ -22,19 +18,14 @@ class OptionController {
       .then(([result]) => {
         if (result) {
           Option.findOneAndUpdate({}, option, { new: true })
-            .then(result => {
-              new HandleResponse({ result }, '网站信息更新成功').success(res)
-            })
-            .catch(err => {
-              new HandleResponse('网站信息更新失败').fail(res)
-            })
+            .then(result => new HandleResponse({ result }, '网站信息更新成功').success(res))
+            .catch(err => new HandleResponse('网站信息更新失败').fail(res))
         } else {
           new Option(option).save()
+          return new HandleResponse('网站信息更新成功').success(res)
         }
       })
-      .catch(err => {
-        new HandleResponse('失败').fail(res)
-      })
+      .catch(err => new HandleResponse('失败').fail(res))
   }
 
 }

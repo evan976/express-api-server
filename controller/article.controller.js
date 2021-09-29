@@ -24,9 +24,7 @@ class ArticleController {
          ? res.json({ code: 1, message: '获取文章列表成功', data: { articleList, pagination: { limit, offset } } })
          : new HandleResponse('空空如也～').fail(res)
       })
-      .catch(err => {
-        new HandleResponse('获取文章列表失败').fail(res)
-      })
+      .catch(err => new HandleResponse('获取文章列表失败').fail(res))
   }
 
   findOne ({ params: { article_id } }, res) {
@@ -43,9 +41,7 @@ class ArticleController {
           new HandleResponse('文章资源不存在').fail(res)
         }
       })
-      .catch(err => {
-        new HandleResponse('获取文章详情失败').fail(res)
-      })
+      .catch(err => new HandleResponse('获取文章详情失败').fail(res))
   }
 
   create ({ body: article, body: { title, content, category } }, res) {
@@ -64,18 +60,12 @@ class ArticleController {
           ? new HandleResponse('文章标题不能重复').fail(res)
           : saveArticle()
       })
-      .catch(err => {
-        new HandleResponse('文章发布失败').fail(res)
-      })
+      .catch(err => new HandleResponse('文章发布失败').fail(res))
 
     const saveArticle = () => {
       new Article(article).save()
-        .then(result => {
-          new HandleResponse({ result }, '文章发布成功').success(res)
-        })
-        .catch(err => {
-          new HandleResponse('文章发布失败').fail(res)
-        })
+        .then(result => new HandleResponse({ result }, '文章发布成功').success(res))
+        .catch(err => new HandleResponse('文章发布失败').fail(res))
     }
   }
 
@@ -95,9 +85,7 @@ class ArticleController {
           ? new HandleResponse('文章标题不能重复').fail(res)
           : updateArticle()
       })
-      .catch(err => {
-        new HandleResponse('失败').fail(res)
-      })
+      .catch(err => new HandleResponse('失败').fail(res))
 
     const updateArticle = () => {
       Article.findByIdAndUpdate(article_id, article, { new: true })
@@ -108,21 +96,15 @@ class ArticleController {
             ? new HandleResponse({ result }, '文章更新成功').success(res)
             : new HandleResponse('没有这篇文章啊～').fail(res)
         })
-        .catch(err => {
-          new HandleResponse('文章更新失败').fail(res)
-        })
+        .catch(err => new HandleResponse('文章更新失败').fail(res))
     }
   }
 
   remove ({ params: { article_id } }, res) {
 
     Article.findByIdAndRemove(article_id)
-      .then(() => {
-        new HandleResponse('文章删除成功').success(res)
-      })
-      .catch(err => {
-        new HandleResponse('文章删除失败').fail(res)
-      })
+      .then(() => new HandleResponse('文章删除成功').success(res))
+      .catch(err => new HandleResponse('文章删除失败').fail(res))
   }
 }
 
