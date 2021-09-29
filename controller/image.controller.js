@@ -7,18 +7,26 @@ const formidable = require('formidable')
 const { QINIU } = require('../config/config.default')
 const HandleResponse = require('../core/response-handler')
 
+const mac = new qiniu.auth.digest.Mac(QINIU.accessKey, QINIU.secretKey)
+const config = new qiniu.conf.Config({
+  // 华南机房 Zone 对象
+  // 参照：https://developer.qiniu.com/kodo/1289/nodejs
+  zone: qiniu.zone.Zone_z2
+})
+const putPolicy = new qiniu.rs.PutPolicy({
+  scope: QINIU.scope,
+  expires: 7200
+})
+const bucketManager = new qiniu.rs.BucketManager(mac, config)
+
+// 获取上传凭证
 const getUpToken = () => {
-  const putPolicy = new qiniu.rs.PutPolicy({
-    scope: QINIU.scope,
-    expires: 7200
-  })
-  const mac = new qiniu.auth.digest.Mac(QINIU.accessKey, QINIU.secretKey)
   const uploadToken = putPolicy.uploadToken(mac)
   return uploadToken
 }
 
+// 上传
 const upload = (req, res) => {
-
   const form = new formidable.IncomingForm({
     multiples: true,
     keepExtensions: true,   // 保留后缀
@@ -39,11 +47,6 @@ const upload = (req, res) => {
     // 要上传文件的本地路径 (表单 type 为 file)
     let filePath = files.file.path
 
-    const config = new qiniu.conf.Config({
-      // 华南机房 Zone 对象
-      // 参照：https://developer.qiniu.com/kodo/1289/nodejs
-      zone: qiniu.zone.Zone_z2
-    })
     const formUploader = new qiniu.form_up.FormUploader(config)
     const putExtra = new qiniu.form_up.PutExtra()
 
@@ -65,16 +68,11 @@ const upload = (req, res) => {
   })
 }
 
+// 获取图片列表
 const findAll = (req, res) => {
-  const mac = new qiniu.auth.digest.Mac(QINIU.accessKey, QINIU.secretKey)
-  const config = new qiniu.conf.Config({
-    zone: qiniu.zone.Zone_z2
-  })
-  const bucketManager = new qiniu.rs.BucketManager(mac, config)
-
   bucketManager.listPrefix(QINIU.scope, 1000, (respErr, respBody, respInfo) => {
     if (respErr) {
-      return new HandleResponse('出错了～').fail(res)
+      return new HandleResponse('请求出错').fail(res)
     }
     if (respInfo.statusCode === 200) {
       const result = respBody.items && respBody.items.map(item => {
@@ -91,7 +89,21 @@ const findAll = (req, res) => {
   })
 }
 
+const remove = ({ params: { key } }, res) => {
+  bucketManager.delete(QINIU.scope, key, (err, respBody, respInfo) => {
+    if (err) {
+      return new HandleResponse('请求出错').fail(res)
+    } else {
+      respInfo.statusCode === 200
+        ? new HandleResponse('删除成功').success(res)
+        : new HandleResponse('删除失败').fail(res)
+    }
+
+  })
+}
+
 module.exports = {
   findAll,
-  upload
+  upload,
+  remove
 }
