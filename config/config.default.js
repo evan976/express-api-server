@@ -13,9 +13,7 @@ module.exports = {
   JWTSECRET: process.env.JWTSECRET || 'nodeserver',
 
   MONGODB: {
-    uri: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`,
-    username: process.env.DB_USERNAME || 'root',
-    password: process.env.DB_PASSWORD || 'root'
+    uri: `mongodb://127.0.0.1:27017/node-app-server`
   },
 
   QINIU: {

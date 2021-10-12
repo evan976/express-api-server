@@ -25,7 +25,7 @@ class OptionController {
           return new HandleResponse('网站信息更新成功').success(res)
         }
       })
-      .catch(err => new HandleResponse('失败').fail(res))
+      .catch(err => new HandleResponse('网站信息更新失败').fail(res))
   }
 
 }

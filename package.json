@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon ./bin/www",
     "start": "NODE_ENV=production node ./bin/www",
+    "serve": "NODE_ENV=production pm2 start ./bin/www",
     "commit": "git cz"
   },
   "keywords": [
@@ -28,14 +29,14 @@
     "http-assert": "^1.5.0",
     "js-base64": "^3.7.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.13.7",
-    "mongoose-auto-increment": "^5.0.1",
+    "mongoose": "^5.13.8",
+    "mongoose-auto-increment": "^3.0.1",
     "morgan": "^1.10.0",
     "package": "^1.0.1",
     "qiniu": "^7.4.0"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^3.3.0"
+    "cz-conventional-changelog": "^3.0.1"
   },
   "config": {
     "commitizen": {

@@ -23,6 +23,11 @@ const categorySchema = new mongoose.Schema({
     type: String
   },
 
+  // 封面图
+  cover: {
+    type: String
+  },
+
   // 创建时间
   created_at: {
     type: Date,

@@ -8,7 +8,7 @@ const HandleResponse = require('../core/response-handler')
 class TagController {
 
   findAll (req, res) {
-    Tag.find({}, 'name slug description')
+    Tag.find({}, 'id name slug description')
     .then(tagList => {
       tagList.length
         ? new HandleResponse({ tagList }, '标签列表获取成功').success(res)
@@ -50,24 +50,13 @@ class TagController {
 
     if (!name) return new HandleResponse('标签名称不能为空').fail(res)
 
-    Tag.find({ name })
+    Tag.findByIdAndUpdate(tag_id, tag, { new: true })
       .then(result => {
-        result.length
-          ? new HandleResponse('标签已存在').fail(res)
-          : updateTag()
+        result
+          ? new HandleResponse({ result }, '标签更新成功').success(res)
+          : new HandleResponse('标签更新失败').fail(res)
       })
       .catch(err => new HandleResponse('标签更新失败').fail(res))
-
-
-    const updateTag = () => {
-      Tag.findByIdAndUpdate(tag_id, tag, { new: true })
-        .then(result => {
-          result
-           ? new HandleResponse({ result }, '标签更新成功').success(res)
-           : new HandleResponse('标签不存在').fail(res)
-        })
-        .catch(err => new HandleResponse('标签更新失败').fail(res))
-    }
   }
 
   remove ({ params: { tag_id } }, res) {
