@@ -12,6 +12,7 @@ const {
 } = require('../core/handle-request')
 class CategoryController {
 
+  // 获取分类列表
   async findAll ({ query: { offset = 1, limit = 10 } }, res) {
 
     [offset, limit] = [offset, limit].map(v => Number(v))
@@ -26,6 +27,7 @@ class CategoryController {
       })
     }
 
+    // 聚合查询每个分类下对应的文章数量
     const getArticleNums = categories => {
       Article.aggregate([
         { $unwind: '$category' },
@@ -53,12 +55,14 @@ class CategoryController {
   }
 
 
+  // 获取单个分类
   findOne ({ params: { category_id } }, res) {
     Category.findById(category_id)
       .then(result => handleSuccess({res, message: '分类获取成功', result}))
       .catch(err => handleError({res, message: '分类获取失败', err}))
   }
 
+  // 新增分类
   create ({ body: category, body: { name } }, res) {
 
     if (!name) return handleError({ res, message: '分类名称不能为空' })
@@ -79,6 +83,7 @@ class CategoryController {
 
   }
 
+  // 修改单个分类
   update ({ params: { category_id }, body: category, body: { name } }, res) {
 
     if (!name) return handleError({ res, message: '分类名称不能为空' })
@@ -88,6 +93,7 @@ class CategoryController {
       .catch(err => handleError({ res, message: '分类更新失败', err }))
   }
 
+  // 删除单个分类
   remove ({ params: { category_id } }, res) {
     Category.findByIdAndRemove(category_id)
     .then(_ => handleSuccess({ res, message: '分类删除成功' }))

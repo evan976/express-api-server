@@ -3,23 +3,33 @@
  */
 
 const jwt = require('jsonwebtoken')
-// const User = require('../model/user.model')
-const HandleResponse = require('../core/response-handler')
+const User = require('../model/user.model')
+const { handleError } = require('../core/handle-request')
 const { JWTSECRET } = require('../config/config.default')
 
 const auth = async (req, res, next) => {
 
   if (!req.headers || !req.headers.authorization) {
-    return new HandleResponse('token无效，暂无权限！').fail(res)
+    return handleError({ res, message: 'token 无效，暂无权限！' })
   }
-  const token = req.headers.authorization.split(' ').pop()
+
+  let token = req.headers.authorization.split(' ')
+	if (token.length === 2 && token[0] === 'Bearer') {
+		token = token[1]
+	} else {
+    return handleError({ res, message: 'token 格式不正确！' })
+  }
 
   try {
     const { data } = jwt.verify(token, JWTSECRET)
+    const user = await User.findById(data)
+    if (!user) {
+      return handleError({ res, message: 'token错误' })
+    }
     req.user_id = data
     next()
-  } catch (error) {
-    return new HandleResponse('token错误或过期，请重新登录！').fail(res)
+  } catch (err) {
+    return handleError({ res, message: 'token 错误或过期，请重新登录！' })
   }
 }
 

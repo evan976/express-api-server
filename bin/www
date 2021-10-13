@@ -7,6 +7,6 @@ const { APP } = require('../config/config.default')
 const enviroment = require('../enviroment')
 
 http.createServer(app).listen(APP.port, () => {
-  console.log(`👌 服务器启动成功, 运行环境: ${enviroment.enviroment}`)
-  console.log(`🏠 接口地址：http://${APP.host}:${APP.port}/api/private/v1`)
+  console.log(`🌟 Server is running, env: ${enviroment.enviroment}`)
+  console.log(`🚀 http://${APP.host}:${APP.port}/api/private/v1`)
 })

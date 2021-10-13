@@ -1,18 +1,20 @@
 /**
- * @module 文件上传控制器
+ * @module 图片上传控制器
  */
 
 const qiniu = require('qiniu')
 const formidable = require('formidable')
 const { QINIU } = require('../config/config.default')
-const HandleResponse = require('../core/response-handler')
+const { handleError, handleSuccess } = require('../core/handle-request')
 
 const mac = new qiniu.auth.digest.Mac(QINIU.accessKey, QINIU.secretKey)
 const config = new qiniu.conf.Config({
-  // 华南机房 Zone 对象
+  // 华南地区 Zone 对象
   // 参照：https://developer.qiniu.com/kodo/1289/nodejs
   zone: qiniu.zone.Zone_z2
 })
+
+// 构建上传策略
 const putPolicy = new qiniu.rs.PutPolicy({
   scope: QINIU.scope,
   expires: 7200
@@ -25,7 +27,7 @@ const getUpToken = () => {
   return uploadToken
 }
 
-// 上传
+// 上传图片至七牛
 const upload = (req, res) => {
   const form = new formidable.IncomingForm({
     multiples: true,
@@ -35,7 +37,7 @@ const upload = (req, res) => {
 
   form.parse(req, (err, fields, files) => {
     if (err) {
-      return new HandleResponse('上传出错了～').fail(res)
+      return handleError({ res, message: '上传出错' })
     }
 
     // 上传到七牛后保存的文件名
@@ -52,17 +54,17 @@ const upload = (req, res) => {
 
     formUploader.putFile(token, key, filePath, putExtra, (respErr, respBody, respInfo) => {
       if (respErr) {
-        return new HandleResponse('上传出错了～').fail(res)
+        return handleError({ res, message: '上传出错' })
       }
 
       // 上传成功，返回七牛云中图片地址
       if (respInfo.statusCode === 200) {
-        const response = {
+        const result = {
           'url': QINIU.url + key
         }
-        new HandleResponse(response, '图片上传成功').success(res)
+        handleSuccess({ res, message: '上传图片成功', result })
       } else {
-        return new HandleResponse('图片上传失败').fail(res)
+        return handleError({ res, message: '图片上传失败' })
       }
     })
   })
@@ -72,7 +74,7 @@ const upload = (req, res) => {
 const findAll = (req, res) => {
   bucketManager.listPrefix(QINIU.scope, 1000, (respErr, respBody, respInfo) => {
     if (respErr) {
-      return new HandleResponse('请求出错').fail(res)
+      return handleError({ res, message: '请求出错', err: respErr })
     }
     if (respInfo.statusCode === 200) {
       const result = respBody.items && respBody.items.map(item => {
@@ -82,21 +84,22 @@ const findAll = (req, res) => {
           url: QINIU.url + item.key
         }
       })
-      return new HandleResponse({ result }, '图片列表获取成功').success(res)
+      return handleSuccess({ res, message: '图片列表获取成功', result })
     } else {
-      return new HandleResponse('图片列表获取失败').fail(res)
+      return handleError({ res, message: '图片列表获取失败' })
     }
   })
 }
 
+// 删除单个图片
 const remove = ({ params: { key } }, res) => {
   bucketManager.delete(QINIU.scope, key, (err, respBody, respInfo) => {
     if (err) {
-      return new HandleResponse('请求出错').fail(res)
+      return handleError({ res, message: '请求出错', err })
     } else {
       respInfo.statusCode === 200
-        ? new HandleResponse('删除成功').success(res)
-        : new HandleResponse('删除失败').fail(res)
+        ? handleSuccess({ res, message: '图片删除成功' })
+        : handleError({ res, message: '图片删除失败' })
     }
 
   })

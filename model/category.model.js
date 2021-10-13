@@ -23,10 +23,11 @@ const categorySchema = new mongoose.Schema({
     type: String
   },
 
-  // 封面图
-  cover: {
-    type: String
-  },
+  // 自定义扩展
+  extend: [{
+    label: { type: String },
+    value: { type: String }
+  }],
 
   // 创建时间
   created_at: {

@@ -8,7 +8,7 @@ const { INFO } = require('../config/config.default')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-  res.jsonp(INFO)
+  res.json(INFO)
 })
 
 router.use(require('./user'))
@@ -21,6 +21,13 @@ router.use('/tags', require('./tag'))
 
 router.use('/options', require('./option'))
 
-router.use('/images', require('./image'))
+router.use('/qiniu', require('./qiniu'))
+
+router.use('*', (req, res) => {
+  res.status(404).json({
+    code: 1,
+    message: '无效的 API 请求'
+  })
+})
 
 module.exports = router

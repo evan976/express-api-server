@@ -1,5 +1,5 @@
 /**
- * @module 请求处理模块
+ * @module 请求处理函数
  */
 
 const handleSuccess = ({ res, message = '请求成功', result = null }) => {
@@ -10,13 +10,9 @@ const handleError = ({ res, message = '请求失败', err = null }) => {
   res.json({ code: 1, message, err })
 }
 
-const handlePaginationResult = (limit, offset, total, result) => ({
-  result,
-  pagination: {
-    limit,
-    offset,
-    total
-  }
+const handlePaginationResult = (limit, offset, total, data) => ({
+  data,
+  pagination: { limit, offset, total }
 })
 
 module.exports = {

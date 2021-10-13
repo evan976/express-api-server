@@ -1,12 +1,6 @@
 /**
- * @module 数据常量模块
+ * @module 数据常量
  */
-
-// 状态码
-exports.STATUS_CODE = {
-  success: 1,  // 成功
-  error: -1  // 失败
-}
 
 // 文章状态
 exports.PUBLISH_STATE = {
