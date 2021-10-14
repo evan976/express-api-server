@@ -23,7 +23,7 @@ class UserController {
             exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7),
             data: user._id
           }, JWTSECRET)
-          handleSuccess({ res, message: '登录成功', result: token })
+          handleSuccess({ res, message: '登录成功', result: { token } })
         } else {
           return handleError({ res, message: '密码错误' })
         }
