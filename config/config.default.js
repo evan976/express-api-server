@@ -20,7 +20,7 @@ module.exports = {
     accessKey: process.env.ACCESSKEY,
     secretKey: process.env.SECRETKEY,
     scope: 'my-website-images',
-    url: 'http://r059le9ks.hn-bkt.clouddn.com/'
+    url: 'https://static.evanone.site/'
   },
 
   INFO: {
