@@ -19,8 +19,8 @@ module.exports = {
   QINIU: {
     accessKey: process.env.ACCESSKEY,
     secretKey: process.env.SECRETKEY,
-    scope: 'my-website-images',
-    url: 'https://static.evanone.site/'
+    scope: process.env.SCOPE,
+    url: process.env.IMAGES_URL
   },
 
   INFO: {
