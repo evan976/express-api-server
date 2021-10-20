@@ -4,7 +4,7 @@
 
 const { mongoose } = require('../core/mongodb')
 const autoIncrement = require('mongoose-auto-increment')
-const { PUBLISH_STATE, ORIGIN_TYPE } = require('../core/constant')
+const { PUBLISH_STATE, ORIGIN_TYPE, IS_HOT } = require('../core/constant')
 
 const articleSchema = new mongoose.Schema({
 
@@ -45,6 +45,12 @@ const articleSchema = new mongoose.Schema({
   origin: {
     type: Number,
     default: ORIGIN_TYPE.original
+  },
+
+  // 热门 0 => 默认 1 => 热门
+  hot: {
+    type: Number,
+    default: IS_HOT.default
   },
 
   // 分类

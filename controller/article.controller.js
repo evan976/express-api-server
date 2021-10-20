@@ -8,7 +8,7 @@ const Category = require('../model/category.model')
 const Tag = require('../model/tag.model')
 
 const config = require('../config/config.default')
-const { SORT_TYPE, PUBLISH_STATE } = require('../core/constant')
+const { SORT_TYPE, PUBLISH_STATE, IS_HOT } = require('../core/constant')
 const {
   handleSuccess,
   handleError,
@@ -22,7 +22,11 @@ class ArticleController {
     // 初始参数
     const { keyword, category, category_slug, tags, tags_slug } = req.query
 
-    const [offset, limit] = [req.query.offset || 1, req.query.limit || 10].map(v => Number(v))
+    const [offset, limit, hot] = [
+      req.query.offset || 1,
+      req.query.limit || 10,
+      req.query.hot
+    ].map(v => Number(v))
 
     const isBackRequset = req.headers.authorization || null
 
@@ -45,6 +49,11 @@ class ArticleController {
     // 标签查询
     if (tags) {
       query.tags = tags
+    }
+
+    // 热门查询
+    if (hot) {
+      query.hot = IS_HOT.hot
     }
 
     // 关键词模糊查询
