@@ -8,7 +8,7 @@ const Category = require('../model/category.model')
 const Tag = require('../model/tag.model')
 
 const config = require('../config/config.default')
-const { SORT_TYPE, PUBLISH_STATE, IS_HOT } = require('../core/constant')
+const { SORT_TYPE, PUBLISH_STATE } = require('../core/constant')
 const {
   handleSuccess,
   handleError,
@@ -53,7 +53,7 @@ class ArticleController {
 
     // 热门查询
     if (hot) {
-      query.hot = IS_HOT.hot
+      query.hot = true
     }
 
     // 关键词模糊查询
@@ -172,9 +172,7 @@ class ArticleController {
   }
 
   // 修改单个文章
-  update ({ params: { article_id }, body: article, body: { title, content, category } }, res) {
-    if (!title || !content) return handleError({ res, message: '文章标题或内容不能为空' })
-    if (!category) return handleError({ res, message: '请选择一个分类' })
+  update ({ params: { article_id }, body: article }, res) {
     Article.findByIdAndUpdate(article_id, article, { new: true })
       .populate('category tags')
       .then(result => handleSuccess({ res, message: '文章更新成功', result }))

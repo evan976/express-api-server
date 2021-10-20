@@ -14,12 +14,6 @@ exports.ORIGIN_TYPE = {
   reprint: 1  // 转载
 }
 
-// 是否热门
-exports.IS_HOT = {
-  default: 0, // not
-  hot: 1  // yes
-}
-
 // 排序类型
 exports.SORT_TYPE = {
   asc: 1, // 升序
