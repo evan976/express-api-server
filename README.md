@@ -1,14 +1,12 @@
 # express-api-server
 
-<img align="center" src="https://static.evanone.site/1634472820157" style="zoom:40%;" />
-
 RESTful API server application for my blog, powered by **[Express](http://expressjs.com/)**, required **[MongoDB](https://docs.mongoing.com)**
 
-一个很简单的 NodeJS 服务端博客项目，主要为博客前台和后台提供 API 接口，代码写的很拉🤣
+NodeJS 服务端博客项目，主要为博客前台和后台提供 API 接口服务
 
-博客后台管理系统在这 [vue-admin-client](https://github.com/wujihua118/vue-admin-client) ，基本完成，但还有很多地方实现的不够优雅，会持续更新
+博客后台管理系统在这 [vue-admin-client](https://github.com/wujihua118/vue-admin-client) ，基本完成，优化
 
-前台个人网站在这 [nuxt-web-app](https://github.com/wujihua118/nuxt-web-app)，还没写完，也会持续更新
+前台个人网站在这 [nuxt-web-app](https://github.com/wujihua118/nuxt-web-app)，正在写
 
 ## 开发环境
 
@@ -52,7 +50,7 @@ Node v14.16.0 + npm v7.23.0 + MongoDB v5.0.2
 - [ ] 音乐模块
 - [ ] 公告模块
 
-由于时间有限，评论、音乐和公告模块就暂且搁置了，后面时间充裕的话会完善
+时间有限，评论、音乐和公告模块暂且搁置，后面时间充裕的话会完善
 
 **特别注意：图片是直接上传到七牛云存储，请自行修改 `config/config.default.js` 里面的相关配置**
 
@@ -99,7 +97,7 @@ QINIU: {
 - `message` 成功或失败描述
 - `result` 返回结果
 
-具体可以看接口文档（还没写😆），在这 [API Document](https://github.com/wujihua118/express-api-server/blob/master/API_DOC.md)
+具体可以看接口文档（没写完🧐），在这 [API Document](https://github.com/wujihua118/express-api-server/blob/master/API_DOC.md)
 
 ## 构建
 
@@ -122,7 +120,10 @@ npm install
 ```bash
 npm run dev
 ```
+## 计划
 
-好啦，现在你可以折腾了，祝折腾愉快～
+使用 `NestJS + TypeScript` 重构
+
+好了，现在你可以折腾了，祝折腾愉快～
 
 欢迎 Star，如有问题请 Issues 
