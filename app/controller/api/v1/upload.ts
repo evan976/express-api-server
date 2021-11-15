@@ -26,6 +26,7 @@ export default class UploadController extends Controller {
     const filename =
       md5(stream.filename) + path.extname(stream.filename).toLocaleLowerCase()
 
+    // 本地临时文件
     const localFilePath = path.join(
       __dirname,
       '../../../public/uploads',
