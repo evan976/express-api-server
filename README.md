@@ -1,12 +1,10 @@
 # express-api-server
 
+# !!!已废弃，新项目地址：[nest-api-server](https://github.com/wujihua118/nest-api-server)
+
 RESTful API server application for my blog, powered by **[Express](http://expressjs.com/)**, required **[MongoDB](https://docs.mongoing.com)**
 
 NodeJS 服务端博客项目，主要为博客前台和后台提供 API 接口服务
-
-博客后台管理系统在这 [vue-admin-client](https://github.com/wujihua118/vue-admin-client) ，基本完成，优化
-
-前台个人网站在这 [nuxt-web-app](https://github.com/wujihua118/nuxt-web-app)，正在写
 
 ## 开发环境
 
@@ -122,7 +120,7 @@ npm run dev
 ```
 ## 计划
 
-使用 `NestJS + TypeScript` 重构
+使用 `NestJS + TypeScript` 重构（已完成）
 
 好了，现在你可以折腾了，祝折腾愉快～
 
